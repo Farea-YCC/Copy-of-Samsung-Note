@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/notes_provider.dart';
+import '../../domain/entities/note.dart';
+
+class FavoriteNotesScreen extends StatelessWidget {
+  const FavoriteNotesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final favoriteNotes = Provider.of<NotesProvider>(context).favoriteNotes;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Favorite Notes'),
+      ),
+      body: favoriteNotes.isEmpty
+          ? const Center(
+        child: Text('No favorite notes found.'),
+      )
+          : ListView.builder(
+        itemCount: favoriteNotes.length,
+        itemBuilder: (context, index) {
+          final note = favoriteNotes[index];
+          return ListTile(
+            title: Text(note.title),
+            subtitle: Text(note.content),
+          );
+        },
+      ),
+    );
+  }
+}
