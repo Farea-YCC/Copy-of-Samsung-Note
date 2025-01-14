@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../domain/entities/note.dart';
 import '../providers/notes_provider.dart';
 import '../screens/add_edit_screen.dart';
-
 class NavigationService {
   static void navigateToAddNoteScreen(BuildContext context) {
     Navigator.of(context).push(

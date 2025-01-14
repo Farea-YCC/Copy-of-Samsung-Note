@@ -1,8 +1,6 @@
 import 'package:notes/core/imports/imports.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NotesProvider>(context);
@@ -45,6 +43,7 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final note = provider.notes[index];
                 return NoteCard(
+                  allNotes: provider.notes,
                   note: note,
                   onTap: () =>
                       NavigationService.navigateToEditNoteScreen(context, note),

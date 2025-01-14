@@ -4,8 +4,10 @@ import '../../domain/entities/note.dart';
 
 class NotesProvider extends ChangeNotifier {
   final NotesRepository repository;
+
   // Constructor
   NotesProvider(this.repository);
+
   List<Note> _notes = [];
   List<Note> _filteredNotes = [];
   String _searchQuery = "";
@@ -34,24 +36,27 @@ class NotesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Add, update, delete, and toggle favorite methods remain the same
+  // Add a new note
   Future<void> addNote(Note note) async {
     await repository.addNote(note);
-    await loadNotes();
+    await loadNotes(); // Reload after adding a note
   }
 
+  // Update an existing note
   Future<void> updateNote(Note note) async {
     await repository.updateNote(note);
-    await loadNotes();
+    await loadNotes(); // Reload after updating a note
   }
 
+  // Delete a note
   Future<void> deleteNote(int id) async {
     await repository.deleteNote(id);
-    await loadNotes();
+    await loadNotes(); // Reload after deleting a note
   }
 
+  // Toggle favorite status
   Future<void> toggleFavorite(Note note) async {
     await repository.toggleFavorite(note.id!, !note.isFavorite);
-    await loadNotes();
+    await loadNotes(); // Reload after toggling favorite status
   }
 }

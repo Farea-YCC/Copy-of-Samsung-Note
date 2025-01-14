@@ -58,7 +58,7 @@ class CustomDrawer extends StatelessWidget {
               context,
               title: l10n.help,
               message: l10n.contactwithus,
-              icon: Icons.live_help_sharp,
+              icon: Icons.help_center_outlined,
             ),
           ),
           _buildCustomDivider(),
@@ -124,7 +124,7 @@ class CustomDrawer extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Color.fromARGB(255, 57, 57, 57),
+
           title: Center(child: Text(l10n.selectlanguage)),
           content: Column(
             mainAxisSize: MainAxisSize.min,

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-///This Is Class App Theme
 class AppTheme {
   /// Light Theme
   static ThemeData get lightTheme {
     return ThemeData(
+      dialogBackgroundColor: Colors.white,
       useMaterial3: true,
       colorScheme: _lightColorScheme,
       appBarTheme: _lightAppBarTheme,
       scaffoldBackgroundColor: Colors.white,
-      cardColor:  Colors.white,
+      cardColor: Colors.white,
       inputDecorationTheme: _inputDecorationTheme(Colors.black),
       elevatedButtonTheme: _elevatedButtonTheme(Colors.white, Colors.redAccent),
       floatingActionButtonTheme: _floatingActionButtonTheme(
         Colors.white,
-         Color.fromARGB(0, 28, 57, 65),
+        const Color.fromARGB(0, 28, 57, 65),
       ),
       textTheme: _getTextTheme(),
       splashFactory: InkRipple.splashFactory,
@@ -25,8 +25,8 @@ class AppTheme {
         cursorColor: Colors.red.withOpacity(1.0),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor:  Color.fromARGB(255, 242, 104, 77),
-        contentTextStyle:  TextStyle(color: Colors.white),
+        backgroundColor: const Color.fromARGB(255, 242, 104, 77),
+        contentTextStyle: const TextStyle(color: Colors.white),
         behavior: SnackBarBehavior.floating,
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -39,15 +39,25 @@ class AppTheme {
   /// Dark Theme
   static ThemeData get darkTheme {
     return ThemeData(
+      dialogBackgroundColor: const Color.fromARGB(255, 57, 57, 57),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: const Color.fromARGB(255, 242, 104, 77),
+        contentTextStyle: const TextStyle(color: Colors.white),
+        behavior: SnackBarBehavior.floating,
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
       useMaterial3: true,
       colorScheme: _darkColorScheme,
       appBarTheme: _darkAppBarTheme,
       scaffoldBackgroundColor: Colors.black,
-      cardColor:  Color.fromARGB(255, 57, 57, 57),
+      cardColor: const Color.fromARGB(255, 57, 57, 57),
       inputDecorationTheme: _inputDecorationTheme(Colors.white),
       elevatedButtonTheme: _elevatedButtonTheme(Colors.white, Colors.black),
       floatingActionButtonTheme: _floatingActionButtonTheme(
-         Color.fromARGB(255, 57, 57, 57),
+        const Color.fromARGB(255, 57, 57, 57),
         Colors.white,
       ),
       textTheme: _getTextTheme(),
@@ -61,9 +71,8 @@ class AppTheme {
     );
   }
 
-
   /// Light Color Scheme
-  static  ColorScheme _lightColorScheme = ColorScheme(
+  static const ColorScheme _lightColorScheme = ColorScheme(
     primary: Colors.black,
     secondary: Colors.black,
     surface: Colors.white,
@@ -76,7 +85,7 @@ class AppTheme {
   );
 
   /// Dark Color Scheme
-  static  ColorScheme _darkColorScheme = ColorScheme(
+  static const ColorScheme _darkColorScheme = ColorScheme(
     primary: Colors.white,
     secondary: Colors.white,
     surface: Colors.black,
@@ -89,7 +98,7 @@ class AppTheme {
   );
 
   /// AppBar Theme
-  static  AppBarTheme _lightAppBarTheme = AppBarTheme(
+  static const AppBarTheme _lightAppBarTheme = AppBarTheme(
     centerTitle: true,
     elevation: 0,
     backgroundColor: Colors.white,
@@ -97,7 +106,7 @@ class AppTheme {
   );
 
   /// Dark AppBar Theme
-  static  AppBarTheme _darkAppBarTheme = AppBarTheme(
+  static const AppBarTheme _darkAppBarTheme = AppBarTheme(
     centerTitle: true,
     elevation: 0,
     backgroundColor: Colors.black,
@@ -111,7 +120,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: borderColor),
       ),
-      contentPadding:  EdgeInsets.symmetric(
+      contentPadding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 12,
       ),
@@ -125,7 +134,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
-        padding:  EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 12,
         ),
@@ -140,7 +149,7 @@ class AppTheme {
   static FloatingActionButtonThemeData _floatingActionButtonTheme(
       Color backgroundColor, Color foregroundColor) {
     return FloatingActionButtonThemeData(
-      shape:  CircleBorder(),
+      shape: const CircleBorder(),
       elevation: 1,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
@@ -149,22 +158,64 @@ class AppTheme {
 
   /// Get Text Theme
   static TextTheme _getTextTheme() {
-    final isArabic =  Locale('ar').languageCode == 'ar';
-    final fontFamily =
-        isArabic ? 'Tajawal' : 'Schyler'; // استخدام Schyler للإنجليزية
-    return TextTheme(
+    const fontFamily = 'Roboto-Regular'; // تحديد الخط الأساسي لجميع اللغات
+
+    return const TextTheme(
       displayLarge: TextStyle(
-          fontFamily: fontFamily, fontSize: 32, fontWeight: FontWeight.bold),
+        fontFamily: fontFamily,
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        height: 1.5,
+        textBaseline: TextBaseline.alphabetic,
+      ),
       displayMedium: TextStyle(
-          fontFamily: fontFamily, fontSize: 28, fontWeight: FontWeight.bold),
+        fontFamily: fontFamily,
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        height: 1.4,
+      ),
       displaySmall: TextStyle(
-          fontFamily: fontFamily, fontSize: 24, fontWeight: FontWeight.bold),
+        fontFamily: fontFamily,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        height: 1.3,
+      ),
       bodyLarge: TextStyle(
-          fontFamily: fontFamily, fontSize: 16, fontWeight: FontWeight.normal),
+        fontFamily: fontFamily,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        height: 1.5,
+      ),
       bodyMedium: TextStyle(
-          fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.normal),
+        fontFamily: fontFamily,
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        height: 1.5,
+      ),
       bodySmall: TextStyle(
-          fontFamily: fontFamily, fontSize: 12, fontWeight: FontWeight.normal),
+        fontFamily: fontFamily,
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        height: 1.4,
+      ),
+      labelLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        height: 1.5,
+      ),
+      titleMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 20,
+        fontWeight: FontWeight.normal,
+        height: 1.4,
+      ),
+      titleSmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        height: 1.3,
+      ),
     );
   }
 }

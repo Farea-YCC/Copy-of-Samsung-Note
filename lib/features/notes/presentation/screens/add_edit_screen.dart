@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import '../../domain/entities/note.dart';
-import 'package:flutter/material.dart';
-import '../../domain/entities/note.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // استيراد الترجمة
-
+import 'package:notes/core/imports/imports.dart';
 class AddEditScreen extends StatefulWidget {
   final Note? initialNote;
   final void Function(String title, String content) onSave;
@@ -15,112 +10,110 @@ class AddEditScreen extends StatefulWidget {
   });
 
   @override
-  _AddEditScreenState createState() => _AddEditScreenState();
+  AddEditScreenState createState() => AddEditScreenState();
 }
-
-class _AddEditScreenState extends State<AddEditScreen> {
+class AddEditScreenState extends State<AddEditScreen> {
   late TextEditingController _titleController;
-  late TextEditingController _contentController;
-  bool _isEditingTitle = false;
+  late QuillController _quillController;
 
   @override
   void initState() {
     super.initState();
     _titleController =
         TextEditingController(text: widget.initialNote?.title ?? '');
-    _contentController =
-        TextEditingController(text: widget.initialNote?.content ?? '');
+    _quillController = QuillController(
+      document: widget.initialNote?.content != null
+          ? Document.fromJson(jsonDecode(widget.initialNote!.content))
+          : Document(),
+      selection: const TextSelection.collapsed(offset: 0),
+    );
   }
 
   @override
   void dispose() {
+    _saveNote();
     _titleController.dispose();
-    _contentController.dispose();
+    _quillController.dispose();
     super.dispose();
   }
 
   void _saveNote() {
-    final l10n = AppLocalizations.of(context)!; // استدعاء الترجمة
-    final title = _titleController.text;
-    final content = _contentController.text;
-    if (title.isNotEmpty && content.isNotEmpty) {
-      widget.onSave(title, content);
-      Navigator.pop(context);
+    final title = _titleController.text.trim();
+    final content = jsonEncode(_quillController.document.toDelta().toJson());
+    final plainTextContent = _quillController.document.toPlainText().trim();
+
+    if (title.isEmpty) {
+      _generateUniqueTitle(plainTextContent);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.title_content_empty),
-          duration: const Duration(milliseconds: 1000),
-        ),
-      );
+      widget.onSave(title, content);
     }
+  }
+
+  void _generateUniqueTitle(String content) {
+    final allNotes = Provider.of<NotesProvider>(context, listen: false).notes;
+    final usedNumbers = allNotes
+        .where((n) => n.title.startsWith('ملاحظة نصية '))
+        .map((n) => int.tryParse(n.title.replaceFirst('ملاحظة نصية ', '')))
+        .where((num) => num != null)
+        .toSet();
+
+    int counter = 1;
+    while (usedNumbers.contains(counter)) {
+      counter++;
+    }
+
+    widget.onSave('ملاحظة نصية $counter', content);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!; // استدعاء الترجمة
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            _saveNote();
+            Navigator.pop(context);
+          },
           icon: const Icon(Icons.arrow_back_ios),
         ),
-        titleSpacing: 0,
-        title: Row(
+        titleSpacing: 5,
+        title: _buildTitleField(l10n),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
           children: [
-            Expanded(
-              child: _isEditingTitle
-                  ? TextField(
-                controller: _titleController,
-                onChanged: (value) {
-                  if (value.length > 50) {
-                    _titleController.text = value.substring(0, 50);
-                    _titleController.selection =
-                        TextSelection.fromPosition(
-                          TextPosition(offset: _titleController.text.length),
-                        );
-                  }
-                },
-                onSubmitted: (_) =>
-                    setState(() => _isEditingTitle = false),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  hintText: l10n.enter_title,
-                ),
-              )
-                  : GestureDetector(
-                onTap: () => setState(() => _isEditingTitle = true),
-                child: Text(
-                  _titleController.text.isEmpty
-                      ? l10n.new_note
-                      : _titleController.text,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                icon: const Icon(Icons.save,size: 30,),
-                onPressed: _saveNote,
-              ),
-            ),
+            Expanded(child: _buildQuillEditor()),
+            _buildQuillToolbar(),
           ],
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(12.0),
-        child: TextField(
-          controller: _contentController,
-          decoration: InputDecoration(
-            hintText: l10n.write_your_note,
-            border: InputBorder.none,
-          ),
-          maxLines: null,
-          expands: true,
-        ),
+    );
+  }
+
+  Widget _buildTitleField(AppLocalizations l10n) {
+    return TextField(
+      controller: _titleController,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: l10n.enter_title,
       ),
+    );
+  }
+
+  Widget _buildQuillEditor() {
+    return QuillEditor.basic(
+      controller: _quillController,
+      focusNode: FocusNode(),
+    );
+  }
+
+  Widget _buildQuillToolbar() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: QuillToolbar.simple(controller: _quillController),
     );
   }
 }

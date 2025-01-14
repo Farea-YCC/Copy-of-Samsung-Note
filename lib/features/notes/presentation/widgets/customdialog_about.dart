@@ -19,7 +19,6 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Dialog(
-      backgroundColor: Color.fromARGB(255, 57, 57, 57),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -59,31 +58,11 @@ class CustomDialog extends StatelessWidget {
                   onPressed: onClose,
                   child: Text(l10n.cancel),
                 ),
-                // ElevatedButton(
-                //   onPressed: _contactViaWhatsApp,
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.green,
-                //   ),
-                //   child: const Icon(Icons.call, color: Colors.white),
-                // ),
               ],
             ),
           ],
         ),
       ),
     );
-  }
-
-  void _contactViaWhatsApp() async {
-    const String phoneNumber = '967717281413';
-    final String encodedMessage = Uri.encodeComponent(message ?? '');
-    final Uri whatsappUri =
-    Uri.parse('https://wa.me/$phoneNumber?text=$encodedMessage');
-
-    if (await canLaunchUrl(whatsappUri)) {
-      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint('Could not launch WhatsApp');
-    }
   }
 }
