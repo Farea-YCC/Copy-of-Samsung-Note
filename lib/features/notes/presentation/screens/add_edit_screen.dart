@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/note.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_quill/flutter_quill.dart';
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import '../../domain/entities/note.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // استيراد الترجمة
 
 class AddEditScreen extends StatefulWidget {
   final Note? initialNote;
@@ -20,7 +20,7 @@ class AddEditScreen extends StatefulWidget {
 
 class _AddEditScreenState extends State<AddEditScreen> {
   late TextEditingController _titleController;
-  late QuillController _quillController;
+  late TextEditingController _contentController;
   bool _isEditingTitle = false;
 
   @override
@@ -28,25 +28,21 @@ class _AddEditScreenState extends State<AddEditScreen> {
     super.initState();
     _titleController =
         TextEditingController(text: widget.initialNote?.title ?? '');
-    _quillController = QuillController(
-      document: widget.initialNote?.content != null
-          ? Document.fromJson(jsonDecode(widget.initialNote!.content))
-          : Document(),
-      selection: const TextSelection.collapsed(offset: 0),
-    );
+    _contentController =
+        TextEditingController(text: widget.initialNote?.content ?? '');
   }
 
   @override
   void dispose() {
     _titleController.dispose();
-    _quillController.dispose();
+    _contentController.dispose();
     super.dispose();
   }
 
   void _saveNote() {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!; // استدعاء الترجمة
     final title = _titleController.text;
-    final content = jsonEncode(_quillController.document.toDelta().toJson());
+    final content = _contentController.text;
     if (title.isNotEmpty && content.isNotEmpty) {
       widget.onSave(title, content);
       Navigator.pop(context);
@@ -62,7 +58,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!; // استدعاء الترجمة
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -75,69 +71,54 @@ class _AddEditScreenState extends State<AddEditScreen> {
             Expanded(
               child: _isEditingTitle
                   ? TextField(
-                      controller: _titleController,
-                      onChanged: (value) {
-                        if (value.length > 50) {
-                          _titleController.text = value.substring(0, 50);
-                          _titleController.selection =
-                              TextSelection.fromPosition(
-                            TextPosition(offset: _titleController.text.length),
-                          );
-                        }
-                      },
-                      onSubmitted: (_) =>
-                          setState(() => _isEditingTitle = false),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        hintText: l10n.enter_title,
-                      ),
-                    )
+                controller: _titleController,
+                onChanged: (value) {
+                  if (value.length > 50) {
+                    _titleController.text = value.substring(0, 50);
+                    _titleController.selection =
+                        TextSelection.fromPosition(
+                          TextPosition(offset: _titleController.text.length),
+                        );
+                  }
+                },
+                onSubmitted: (_) =>
+                    setState(() => _isEditingTitle = false),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  hintText: l10n.enter_title,
+                ),
+              )
                   : GestureDetector(
-                      onTap: () => setState(() => _isEditingTitle = true),
-                      child: Text(
-                        _titleController.text.isEmpty
-                            ? l10n.new_note
-                            : _titleController.text,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                onTap: () => setState(() => _isEditingTitle = true),
+                child: Text(
+                  _titleController.text.isEmpty
+                      ? l10n.new_note
+                      : _titleController.text,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
-                icon: const Icon(
-                  Icons.save,
-                  size: 30,
-                ),
+                icon: const Icon(Icons.save,size: 30,),
                 onPressed: _saveNote,
               ),
             ),
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: LayoutBuilder(
-          builder: (context, constraints) => Column(
-            children: [
-              Expanded(
-                child: QuillEditor.basic(
-                  controller: _quillController,
-                  focusNode: FocusNode(),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: QuillToolbar.simple(
-                    controller: _quillController,
-                  ),
-                ),
-              ),
-            ],
+      body: Container(
+        padding: const EdgeInsets.all(12.0),
+        child: TextField(
+          controller: _contentController,
+          decoration: InputDecoration(
+            hintText: l10n.write_your_note,
+            border: InputBorder.none,
           ),
+          maxLines: null,
+          expands: true,
         ),
       ),
     );

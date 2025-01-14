@@ -45,8 +45,6 @@ dependencies:
   provider:
   dartz:
   url_launcher:
-#  rich_editor:
-  flutter_quill:
 
 
 dev_dependencies:
@@ -75,5 +73,4 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
-    - assets/fonts/Amiri-Regular.ttf
-    - assets/fonts/Roboto-Regular.ttf
+    - assets/fonts/

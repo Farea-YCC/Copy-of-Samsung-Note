@@ -37,14 +37,7 @@
     "enter_title": "Enter title...",
     "write_your_note": "Write your note here...",
     "title_content_empty": "Title and content cannot be empty",
-    "no_note_favorite": "No favorite notes found.",
-    "title_required": "Title is required",
-    "content_required": "Content is required",
-    "note_saved_successfully": "Note saved successfully",
-    "confirm_exit": "Confirm Exit",
-    "unsaved_changes": "You have unsaved changes. Are you sure you want to exit?",
-    "exit": "Exit",
-    "error": "Error",
-    "ok": "OK",
-    "start_typing": "Start typing..."
+    "no_note_favorite": "No favorite notes found."
+
+
 }

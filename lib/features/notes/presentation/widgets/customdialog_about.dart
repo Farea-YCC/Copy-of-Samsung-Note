@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class CustomDialog extends StatelessWidget {
   final String? title;
   final String? message;
@@ -18,6 +19,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Dialog(
+      backgroundColor: Color.fromARGB(255, 57, 57, 57),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),

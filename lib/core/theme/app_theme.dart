@@ -5,17 +5,16 @@ class AppTheme {
   /// Light Theme
   static ThemeData get lightTheme {
     return ThemeData(
-      dialogBackgroundColor: Colors.white,
       useMaterial3: true,
       colorScheme: _lightColorScheme,
       appBarTheme: _lightAppBarTheme,
       scaffoldBackgroundColor: Colors.white,
-      cardColor: Colors.white,
+      cardColor:  Colors.white,
       inputDecorationTheme: _inputDecorationTheme(Colors.black),
       elevatedButtonTheme: _elevatedButtonTheme(Colors.white, Colors.redAccent),
       floatingActionButtonTheme: _floatingActionButtonTheme(
         Colors.white,
-        Color.fromARGB(0, 28, 57, 65),
+         Color.fromARGB(0, 28, 57, 65),
       ),
       textTheme: _getTextTheme(),
       splashFactory: InkRipple.splashFactory,
@@ -26,8 +25,8 @@ class AppTheme {
         cursorColor: Colors.red.withOpacity(1.0),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: Color.fromARGB(255, 242, 104, 77),
-        contentTextStyle: TextStyle(color: Colors.white),
+        backgroundColor:  Color.fromARGB(255, 242, 104, 77),
+        contentTextStyle:  TextStyle(color: Colors.white),
         behavior: SnackBarBehavior.floating,
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -40,16 +39,15 @@ class AppTheme {
   /// Dark Theme
   static ThemeData get darkTheme {
     return ThemeData(
-      dialogBackgroundColor: Color.fromARGB(255, 57, 57, 57),
       useMaterial3: true,
       colorScheme: _darkColorScheme,
       appBarTheme: _darkAppBarTheme,
       scaffoldBackgroundColor: Colors.black,
-      cardColor: Color.fromARGB(255, 57, 57, 57),
+      cardColor:  Color.fromARGB(255, 57, 57, 57),
       inputDecorationTheme: _inputDecorationTheme(Colors.white),
       elevatedButtonTheme: _elevatedButtonTheme(Colors.white, Colors.black),
       floatingActionButtonTheme: _floatingActionButtonTheme(
-        Color.fromARGB(255, 57, 57, 57),
+         Color.fromARGB(255, 57, 57, 57),
         Colors.white,
       ),
       textTheme: _getTextTheme(),
@@ -63,8 +61,9 @@ class AppTheme {
     );
   }
 
+
   /// Light Color Scheme
-  static ColorScheme _lightColorScheme = ColorScheme(
+  static  ColorScheme _lightColorScheme = ColorScheme(
     primary: Colors.black,
     secondary: Colors.black,
     surface: Colors.white,
@@ -77,7 +76,7 @@ class AppTheme {
   );
 
   /// Dark Color Scheme
-  static ColorScheme _darkColorScheme = ColorScheme(
+  static  ColorScheme _darkColorScheme = ColorScheme(
     primary: Colors.white,
     secondary: Colors.white,
     surface: Colors.black,
@@ -90,7 +89,7 @@ class AppTheme {
   );
 
   /// AppBar Theme
-  static AppBarTheme _lightAppBarTheme = AppBarTheme(
+  static  AppBarTheme _lightAppBarTheme = AppBarTheme(
     centerTitle: true,
     elevation: 0,
     backgroundColor: Colors.white,
@@ -98,7 +97,7 @@ class AppTheme {
   );
 
   /// Dark AppBar Theme
-  static AppBarTheme _darkAppBarTheme = AppBarTheme(
+  static  AppBarTheme _darkAppBarTheme = AppBarTheme(
     centerTitle: true,
     elevation: 0,
     backgroundColor: Colors.black,
@@ -112,7 +111,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: borderColor),
       ),
-      contentPadding: EdgeInsets.symmetric(
+      contentPadding:  EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 12,
       ),
@@ -126,7 +125,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
-        padding: EdgeInsets.symmetric(
+        padding:  EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 12,
         ),
@@ -141,7 +140,7 @@ class AppTheme {
   static FloatingActionButtonThemeData _floatingActionButtonTheme(
       Color backgroundColor, Color foregroundColor) {
     return FloatingActionButtonThemeData(
-      shape: CircleBorder(),
+      shape:  CircleBorder(),
       elevation: 1,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
@@ -150,7 +149,7 @@ class AppTheme {
 
   /// Get Text Theme
   static TextTheme _getTextTheme() {
-    final isArabic = Locale('ar').languageCode == 'ar';
+    final isArabic =  Locale('ar').languageCode == 'ar';
     final fontFamily =
         isArabic ? 'Tajawal' : 'Schyler'; // استخدام Schyler للإنجليزية
     return TextTheme(

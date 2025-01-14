@@ -37,16 +37,5 @@
     "enter_title": "إدخل العنوان...",
     "write_your_note": "اكتب ملاحظتك هنا...",
     "title_content_empty": "لا يمكن أن يكون العنوان أو المحتوى فارغًا",
-    "no_note_favorite": "لا يوجد ملاحظات مفضلة.",
-
-    "title_required": " ",
-    "content_required": "",
-    "note_saved_successfully": "",
-    "confirm_exit": "",
-    "unsaved_changes": " ",
-    "exit": "",
-    "error": "",
-    "ok": "",
-    "start_typing": "Start typing..."
-
+    "no_note_favorite": "لا يوجد ملاحظات مفضلة."
 }
